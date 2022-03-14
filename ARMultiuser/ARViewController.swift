@@ -1,16 +1,24 @@
 /*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Main view controller for the AR experience.
-*/
+ See LICENSE folder for this sample’s licensing information.
+ 
+ Abstract:
+ Main view controller for the AR experience.
+ */
 
 import UIKit
 import SceneKit
 import ARKit
 import MultipeerConnectivity
 
-class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, SessionPassDelegate {
+    
+    func passingSession(session: MultipeerSession) {
+        multipeerSession = session
+        multipeerSession.receivedDataHandler = receivedData
+        multipeerSession.getSessionDelegateBack()
+    }
+    
+    var isPlaced: Bool = false
     // MARK: - IBOutlets
     
     @IBOutlet weak var sessionInfoView: UIView!
@@ -25,8 +33,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,7 +62,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Prevent the screen from being dimmed after a while as users will likely
         // have long periods of interaction without touching the screen or buttons.
         UIApplication.shared.isIdleTimerDisabled = true
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,8 +74,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     // MARK: - ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if let name = anchor.name, name.hasPrefix("panda") {
-            node.addChildNode(loadRedPandaModel())
+        if let name = anchor.name, name.hasPrefix("gamePlace") {
+            node.addChildNode(loadMap())
         }
     }
     
@@ -138,39 +143,61 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     /// - Tag: PlaceCharacter
     @IBAction func handleSceneTap(_ sender: UITapGestureRecognizer) {
-        
         // Hit test to find a place for a virtual object.
         guard let hitTestResult = sceneView
-            .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
-            .first
-            else { return }
-        
+                .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
+                .first
+        else { return }
+        if isPlaced {
+            return
+        }
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
-        let anchor = ARAnchor(name: "panda", transform: hitTestResult.worldTransform)
+        let anchor = ARAnchor(name: "gamePlace", transform: hitTestResult.worldTransform)
         sceneView.session.add(anchor: anchor)
+        isPlaced = true
         
         // Send the anchor info to peers, so they can place the same content.
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
-            else { fatalError("can't encode anchor") }
+        else { fatalError("can't encode anchor") }
         self.multipeerSession.sendToAllPeers(data)
     }
     
+    @IBAction func sendAction(_ sender: Any) {
+        do{
+            let action = PlayerAction()
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(action)
+            self.multipeerSession.sendToAllPeers(data)}
+        catch{
+            fatalError()
+        }
+    }
     /// - Tag: GetWorldMap
     @IBAction func shareSession(_ button: UIButton) {
+        print("Share the session")
         sceneView.session.getCurrentWorldMap { worldMap, error in
             guard let map = worldMap
-                else { print("Error: \(error!.localizedDescription)"); return }
+            else { print("Error: \(error!.localizedDescription)"); return }
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
-                else { fatalError("can't encode map") }
+            else { fatalError("can't encode map") }
             self.multipeerSession.sendToAllPeers(data)
         }
     }
     
     var mapProvider: MCPeerID?
-
+    
     /// - Tag: ReceiveData
     func receivedData(_ data: Data, from peer: MCPeerID) {
-        
+        do {
+            print(data.description)
+            let action = try JSONDecoder()
+              .decode(PlayerAction.self, from: data)
+            print("from \(peer.displayName), player index: \(action.playerIndex) do \(action.playerAction)")
+//            sessionInfoLabel.text = "from \(peer.displayName), player index: \(action.playerIndex) do \(action.playerIndex)"
+            return
+        } catch {
+            // no use
+        }
         do {
             if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                 // Run the session with the received world map.
@@ -183,10 +210,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 mapProvider = peer
             }
             else
-            if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
-                // Add anchor to the session, ARSCNView delegate adds visible content.
-                sceneView.session.add(anchor: anchor)
-            }
+                if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
+                    // Add anchor to the session, ARSCNView delegate adds visible content.
+                    sceneView.session.add(anchor: anchor)
+                }
             else {
                 print("unknown data recieved from \(peer)")
             }
@@ -220,7 +247,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             message = "Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions."
             
         case .limited(.initializing) where mapProvider != nil,
-             .limited(.relocalizing) where mapProvider != nil:
+                .limited(.relocalizing) where mapProvider != nil:
             message = "Received map from \(mapProvider!.displayName)."
             
         case .limited(.relocalizing):
@@ -247,12 +274,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     // MARK: - AR session management
-    private func loadRedPandaModel() -> SCNNode {
-        let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        let referenceNode = SCNReferenceNode(url: sceneURL)!
-        referenceNode.load()
-        
-        return referenceNode
+    private func loadMap() -> SCNNode {
+        let square = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0.01)
+        square.firstMaterial?.diffuse.contents = UIColor.systemGray
+        let node = SCNNode(geometry: square)
+        node.position = SCNVector3(x: 0, y: 0, z: 0)
+        return node
     }
 }
 

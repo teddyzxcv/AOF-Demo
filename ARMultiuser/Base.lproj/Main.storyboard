@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7dh-A0-qGE">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ltf-la-bMe">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="WeU-Be-bo7">
             <objects>
-                <viewController id="7dh-A0-qGE" customClass="ViewController" customModule="ARMultiuser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AR" modalPresentationStyle="fullScreen" id="7dh-A0-qGE" customClass="ARViewController" customModule="ARMultiuser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="loo-cG-myf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,7 +31,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gad-7G-M17" customClass="RoundedButton" customModule="ARMultiuser" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gad-7G-M17" customClass="RoundedButton" customModule="ARMultiuser" customModuleProvider="target">
                                 <rect key="frame" x="117.5" y="593" width="140" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <inset key="contentEdgeInsets" minX="13" minY="8" maxX="13" maxY="8"/>
@@ -41,13 +41,13 @@
                                 </connections>
                             </button>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="37h-bD-Iyn">
-                                <rect key="frame" x="16" y="40" width="191" height="38"/>
+                                <rect key="frame" x="16" y="20" width="190" height="38"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pkc-hu-yuO">
-                                    <rect key="frame" x="0.0" y="0.0" width="191" height="38"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="190" height="38"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Initializing AR session." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCE-IA-wLv">
-                                            <rect key="frame" x="8" y="8" width="169" height="22"/>
+                                            <rect key="frame" x="8" y="8" width="168" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="7j0-wl-8x9"/>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="awR-PG-icx"/>
@@ -72,7 +72,7 @@
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOo-FY-E3u" userLabel="Restart Experience Button Icon">
-                                <rect key="frame" x="323" y="20" width="52" height="60"/>
+                                <rect key="frame" x="323" y="0.0" width="52" height="59"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="25" maxX="24" maxY="12"/>
                                 <state key="normal" image="restart"/>
                                 <state key="selected" image="restartPressed"/>
@@ -81,7 +81,17 @@
                                     <action selector="resetTracking:" destination="7dh-A0-qGE" eventType="touchUpInside" id="OJ4-o7-irp"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaW-I3-68S" customClass="RoundedButton" customModule="ARMultiuser" customModuleProvider="target">
+                                <rect key="frame" x="16" y="592" width="86" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Send Str"/>
+                                <connections>
+                                    <action selector="sendAction:" destination="7dh-A0-qGE" eventType="touchUpInside" id="F2R-Ky-cds"/>
+                                </connections>
+                            </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="71x-2l-AWw"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="BrB-h1-WRS" secondAttribute="bottom" id="8rY-15-6Ru"/>
@@ -97,8 +107,8 @@
                             <constraint firstItem="71x-2l-AWw" firstAttribute="bottom" secondItem="gad-7G-M17" secondAttribute="bottom" constant="40" id="rjy-cN-gsQ"/>
                             <constraint firstAttribute="top" secondItem="BrB-h1-WRS" secondAttribute="top" id="ulI-xa-35w"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="71x-2l-AWw"/>
                     </view>
+                    <navigationItem key="navigationItem" id="vXB-NR-pux"/>
                     <connections>
                         <outlet property="mappingStatusLabel" destination="aD6-EU-VHg" id="XNR-tR-am9"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="sgr-g8-kdG"/>
@@ -117,9 +127,85 @@
             </objects>
             <point key="canvasLocation" x="1029.5999999999999" y="-222.63868065967017"/>
         </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="zXi-ow-LCq">
+            <objects>
+                <viewController storyboardIdentifier="Menu" id="ltf-la-bMe" customClass="MenuViewController" customModule="ARMultiuser" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2bL-Zl-Nw7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wjs-h8-K70" customClass="RoundedButton" customModule="ARMultiuser" customModuleProvider="target">
+                                <rect key="frame" x="114" y="240" width="147" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Host"/>
+                                <connections>
+                                    <action selector="hostTheSession:" destination="ltf-la-bMe" eventType="touchUpInside" id="B0f-rp-ZeN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NcH-xC-oQZ" customClass="RoundedButton" customModule="ARMultiuser" customModuleProvider="target">
+                                <rect key="frame" x="114" y="440" width="147" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Join"/>
+                                <connections>
+                                    <action selector="joinTheSession:" destination="ltf-la-bMe" eventType="touchUpInside" id="ul9-ea-B6v"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuo-BM-Sy9" customClass="ConnectionStatusLabel" customModule="ARMultiuser" customModuleProvider="target">
+                                <rect key="frame" x="132" y="51" width="110" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ab-8G-lgq" customClass="RoundedButton" customModule="ARMultiuser" customModuleProvider="target">
+                                <rect key="frame" x="115" y="345" width="142" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Start"/>
+                                <connections>
+                                    <action selector="startTheGame:" destination="ltf-la-bMe" eventType="touchUpInside" id="6nv-SS-T2z"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="0IG-33-ceG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="connectStatusLabel" destination="yuo-BM-Sy9" id="rzP-OR-uMs"/>
+                        <outlet property="hostButton" destination="wjs-h8-K70" id="mcB-9W-F6L"/>
+                        <outlet property="joinButton" destination="NcH-xC-oQZ" id="rIV-TV-EN3"/>
+                        <outlet property="menuView" destination="2bL-Zl-Nw7" id="wNk-nT-9Js"/>
+                        <outlet property="startButton" destination="6Ab-8G-lgq" id="qg0-TQ-4ad"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6eb-6H-SoK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="268" y="-223.53823088455775"/>
+        </scene>
     </scenes>
+    <designables>
+        <designable name="6Ab-8G-lgq">
+            <size key="intrinsicContentSize" width="56" height="31"/>
+        </designable>
+        <designable name="NcH-xC-oQZ">
+            <size key="intrinsicContentSize" width="51" height="31"/>
+        </designable>
+        <designable name="gad-7G-M17">
+            <size key="intrinsicContentSize" width="140" height="34"/>
+        </designable>
+        <designable name="wjs-h8-K70">
+            <size key="intrinsicContentSize" width="54.5" height="31"/>
+        </designable>
+        <designable name="yuo-BM-Sy9"/>
+    </designables>
     <resources>
-        <image name="restart" width="20" height="23"/>
-        <image name="restartPressed" width="20" height="23"/>
+        <image name="restart" width="20" height="20"/>
+        <image name="restartPressed" width="20" height="20"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
