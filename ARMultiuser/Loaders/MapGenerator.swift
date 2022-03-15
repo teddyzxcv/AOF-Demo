@@ -333,46 +333,46 @@ class Square_Map {
         }
     }
     
-//    func generate_resources() -> Void {
-//        var count_amounts = [Int]()
-//        let dispersion_koef = [10, 10, 15]
-//        // Заполняем кол-во ресурсов.
-//        for i in 0...2 {
-//            count_amounts.append(self.resources_lists[i + 2].count / dispersion_koef[i])
-//        }
-//        // Считаем кол-во кустов.
-//        count_amounts.append((self.resources_lists[3].count + self.resources_lists[2].count) / 10)
-//        // Генерируем все ресурсы. (кроме кустов)
-//        for it in 0...(count_amounts.count - 2) {
-//            //  Выбираем n раз клетки соотв. биомов, на которых генерруем ресурсы.
-//            for _ in 0...(count_amounts[it] - 1) {
-//                let pos = Int.random(in: 0...(self.resources_lists[it + 2].count - 1))
-//                let coords = self.resources_lists[it + 2][pos]
-//                self.resources_map[coords.0][coords.1] = it + 1
-//                self.resources_lists[it + 2].remove(at: pos)
-//            }
-//        }
-//        // Генерируем все кусты. (на равниинах + холмах)
-//        for _ in 0...(count_amounts[3] - 1) {
-//            let pos = Int.random(in: 0...(self.resources_lists[2].count + self.resources_lists[3].count - 1))
-//            var coords = (0, 0)
-//            if (pos >= self.resources_lists[2].count) {
-//                coords = self.resources_lists[3][pos - self.resources_lists[2].count]
-//            }
-//            else {
-//                coords = self.resources_lists[2][pos]
-//            }
-//            self.resources_map[coords.0][coords.1] = 4
-//            if (pos >= self.resources_lists[2].count) {
-//                self.resources_lists[3].remove(at: pos - self.resources_lists[2].count)
-//            }
-//            else {
-//                self.resources_lists[2].remove(at: pos)
-//            }
-//        }
-//        // Генерируем замок.
-//        self.resources_map[self.interpolated_map.count / 2][(self.interpolated_map[0].count / 2) + 2] = 5
-//    }
+    func generate_resources() -> Void {
+        var count_amounts = [Int]()
+        let dispersion_koef = [10, 10, 15]
+        // Заполняем кол-во ресурсов.
+        for i in 0...2 {
+            count_amounts.append(self.resources_lists[i + 2].count / dispersion_koef[i])
+        }
+        // Считаем кол-во кустов.
+        count_amounts.append((self.resources_lists[3].count + self.resources_lists[2].count) / 10)
+        // Генерируем все ресурсы. (кроме кустов)
+        for it in 0...(count_amounts.count - 2) {
+            //  Выбираем n раз клетки соотв. биомов, на которых генерруем ресурсы.
+            for _ in 0...(count_amounts[it] - 1) {
+                let pos = Int.random(in: 0...(self.resources_lists[it + 2].count - 1))
+                let coords = self.resources_lists[it + 2][pos]
+                self.resources_map[coords.0][coords.1] = it + 1
+                self.resources_lists[it + 2].remove(at: pos)
+            }
+        }
+        // Генерируем все кусты. (на равниинах + холмах)
+        for _ in 0...(count_amounts[3] - 1) {
+            let pos = Int.random(in: 0...(self.resources_lists[2].count + self.resources_lists[3].count - 1))
+            var coords = (0, 0)
+            if (pos >= self.resources_lists[2].count) {
+                coords = self.resources_lists[3][pos - self.resources_lists[2].count]
+            }
+            else {
+                coords = self.resources_lists[2][pos]
+            }
+            self.resources_map[coords.0][coords.1] = 4
+            if (pos >= self.resources_lists[2].count) {
+                self.resources_lists[3].remove(at: pos - self.resources_lists[2].count)
+            }
+            else {
+                self.resources_lists[2].remove(at: pos)
+            }
+        }
+        // Генерируем замок.
+        self.resources_map[self.interpolated_map.count / 2][(self.interpolated_map[0].count / 2) + 2] = 5
+    }
     
     func generate_users() -> Void {
         self.first_x = Int.random(in: 0...(self.interpolated_map.count / 3))
@@ -561,10 +561,10 @@ func map_generator(sizemap_x: Int, sizemap_y: Int, number_of_continents: Int) ->
     map.approximaion()
 
     // КАРТА СОБРАНА В map.interpolated_map.
-    //map.generate_resources()
+    map.generate_resources()
     let field = Map()
     field.heights = map.interpolated_map
-    field.resources = map.resources
+    field.resources = map.resources_map
     field.first_x = map.first_x
     field.second_x = map.second_x
     field.first_y = map.first_y

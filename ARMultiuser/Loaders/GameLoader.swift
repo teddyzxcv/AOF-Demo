@@ -22,6 +22,7 @@ class GameLoader {
         for indexX in 0..<squareMap.heights.count{
             for indexY in 0..<squareMap.heights.count {
                 let height = squareMap.heights[indexX][indexY]
+                let resourceType = squareMap.resources[indexX][indexY]
                 let nWidth: CGFloat = CGFloat(1 / scale)
                 let nLength: CGFloat = CGFloat(1 / scale)
                 let nHeight: CGFloat = CGFloat(Float(height) / scale)
@@ -62,6 +63,32 @@ class GameLoader {
                 node.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight / 2), z: Float(y) / Float(scale) )
                 node.name = "Terrain"
                 squareNodes.append(node)
+                if (resourceType == 0){
+                    continue
+                }
+                var resourceColor: UIColor!
+                switch resourceType {
+                case 1:
+                    resourceColor = UIColor.blue
+                    break
+                case 2:
+                    resourceColor = UIColor.red
+                    break
+                case 3:
+                    resourceColor = UIColor.brown
+                    break
+                case 4:
+                    resourceColor = UIColor.systemPink
+                    break
+                default:
+                    resourceColor = UIColor.darkGray
+                    break
+                }
+                let resourcesGeo = SCNSphere(radius: 0.4 / CGFloat(scale))
+                resourcesGeo.firstMaterial?.diffuse.contents = resourceColor
+                let resourcesNode = SCNNode(geometry: resourcesGeo)
+                resourcesNode.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + 0.4 / CGFloat(scale)), z: Float(y) / Float(scale) )
+                squareNodes.append(resourcesNode)
             }
         }
         return squareNodes
@@ -83,7 +110,7 @@ class GameLoader {
         nHeight = CGFloat(Float(squareMap.heights[squareMap.second_x][squareMap.second_y]) / scale)
         nodeSecond.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + (CGFloat(2.5 / scale) / 2)), z: Float(y) / Float(scale) )
         nodeSecond.name = "1"
-        nodeSecond.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        nodeSecond.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
         return [nodeFirst, nodeSecond]
     }
     
