@@ -7,13 +7,18 @@
 //
 
 import Foundation
+import SceneKit
 
 class PlayerAction: Codable{
     var playerIndex: Int
-    var playerAction: String
+    var playerDist: [Float]
+    
+    func getDist() -> SCNVector3{
+        return SCNVector3(x: playerDist[0], y: playerDist[1], z: playerDist[2])
+    }
     
     init() {
         playerIndex = 0;
-        playerAction = "Go"
+        playerDist = [0,0,0]
     }
 }

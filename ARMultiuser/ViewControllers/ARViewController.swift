@@ -87,11 +87,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         lightNode.name = "light"
         node.addChildNode(lightNode)
         if let name = anchor.name, name.hasPrefix("gamePlace") {
-            let nodes = loadMap()
+            let gameLoader = GameLoader()
+            let nodes = gameLoader.loadMap(squareMap: squareMap)
             for chnode in nodes{
                 node.addChildNode(chnode)
             }
-            node.addChildNode(loadPlayers().first!)
+            GameLoader.players = gameLoader.loadPlayers(squareMap: squareMap)
+            node.addChildNode(GameLoader.players.first!)
         }
     }
     
@@ -167,13 +169,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         if isPlaced {
             guard let nodeHitTestResult = sceneView.hitTest(sender.location(in: sceneView), options: .none).first
             else { return }
-            print("------>>>>")
-            print(nodeHitTestResult.node.debugDescription)
-            print(nodeHitTestResult.node.description)
-            print(nodeHitTestResult.node.name)
-            print(nodeHitTestResult.node.parent?.description)
-            print(nodeHitTestResult.node.parent?.childNodes.first?.description)
-            print(nodeHitTestResult.node.parent?.childNodes.count)
+            let node = nodeHitTestResult.node
+            if node.name != "Terrain" {
+                let action = GameLoader().jumpAction()
+                node.runAction(action)
+            } else {
+                GameLoader.players.first?.runAction(GameLoader().moveToAction(dist: node.position))
+                sendAction(playerIndex: 0, dist: node.position )
+            }
             return
         }
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
@@ -187,9 +190,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         self.multipeerSession.sendToAllPeers(data)
     }
     
-    @IBAction func sendAction(_ sender: Any) {
+    func sendAction(playerIndex: Int, dist: SCNVector3) {
         do{
             let action = PlayerAction()
+            action.playerIndex = playerIndex
+            action.playerDist = [dist.x, dist.y, dist.z]
             let encoder = JSONEncoder()
             let data = try encoder.encode(action)
             self.multipeerSession.sendToAllPeers(data)}
@@ -223,7 +228,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         do {
             let action = try JSONDecoder()
                 .decode(PlayerAction.self, from: data)
-            print("from \(peer.displayName), player index: \(action.playerIndex) do \(action.playerAction)")
+            GameLoader.players[action.playerIndex].runAction(GameLoader().moveToAction(dist: action.getDist()))
             //            sessionInfoLabel.text = "from \(peer.displayName), player index: \(action.playerIndex) do \(action.playerIndex)"
             return
         } catch {
@@ -307,74 +312,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         isPlaced = false
-    }
-    
-    let scale : Float = 40
-    
-    private func loadPlayers() -> [SCNNode] {
-        let pShape = SCNCapsule(capRadius: 0.4 / CGFloat(scale), height: 2.5 / CGFloat(scale))
-        let node = SCNNode(geometry: pShape)
-        let x = Float(squareMap.first_x) - Float(squareMap.size / 2)
-        let y = Float(squareMap.first_y) - Float(squareMap.size / 2)
-        let nHeight: CGFloat = CGFloat(Float(squareMap.heights[squareMap.first_x][squareMap.first_y]) / scale)
-        node.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + (CGFloat(2.5 / scale) / 2)), z: Float(y) / Float(scale) )
-        node.name = "First player"
-        return [node]
-    }
-    
-    // MARK: - AR session management
-    private func loadMap() -> [SCNNode] {
-        let sceneURL = Bundle.main.url(forResource: "terrain", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        let referenceNode = SCNReferenceNode(url: sceneURL)!
-        referenceNode.load()
-        let terrainNode = referenceNode.childNodes.first!
-        var squareNodes = [SCNNode]()
-        for indexX in 0..<squareMap.heights.count{
-            for indexY in 0..<squareMap.heights.count {
-                let height = squareMap.heights[indexX][indexY]
-                let nWidth: CGFloat = CGFloat(1 / scale)
-                let nLength: CGFloat = CGFloat(1 / scale)
-                let nHeight: CGFloat = CGFloat(Float(height) / scale)
-                // let square = SCNBox(width: nWidth, height: nHeight, length: nLength, chamferRadius: 0.001)
-                var color : UIColor!
-                switch height{
-                case 1:
-                    color = UIColor.blue
-                    break
-                case 2:
-                    color = UIColor.green
-                    break
-                case 3:
-                    color = UIColor.systemGreen
-                    break
-                case 4:
-                    color = UIColor.gray
-                    break
-                case 5:
-                    color = UIColor.white
-                    break
-                default:
-                    color = UIColor.orange
-                }
-                let node: SCNNode = terrainNode.copy() as! SCNNode
-                let geo = node.geometry?.copy() as! SCNBox
-                geo.width = nWidth
-                geo.height = nHeight
-                geo.length = nLength
-                geo.chamferRadius = CGFloat(0.02 / scale)
-                let material = geo.firstMaterial?.copy() as! SCNMaterial
-                material.diffuse.contents = color
-                material.lightingModel = SCNMaterial.LightingModel.physicallyBased
-                geo.firstMaterial = material
-                node.geometry = geo
-                let x = Float(indexX) - Float(squareMap.size / 2)
-                let y = Float(indexY) - Float(squareMap.size / 2)
-                node.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight / 2), z: Float(y) / Float(scale) )
-                node.name = "x:\(indexX), y:\(indexY), height:\(height)"
-                squareNodes.append(node)
-            }
-        }
-        return squareNodes
     }
 }
 

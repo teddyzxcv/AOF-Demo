@@ -11,6 +11,7 @@
 		112FE5671F4F95A200BF85EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112FE5661F4F95A200BF85EA /* Assets.xcassets */; };
 		11C983EC20953B7900394C67 /* MultipeerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C983EB20953B7900394C67 /* MultipeerSession.swift */; };
 		11E9720A209A355F006E3D26 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E97209209A355F006E3D26 /* Utilities.swift */; };
+		6D2612EE27E0131E00B54932 /* GameLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2612ED27E0131E00B54932 /* GameLoader.swift */; };
 		6D4D836E27DE9B9E0057AB62 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D836D27DE9B9E0057AB62 /* MenuViewController.swift */; };
 		6DBB41BC27DEB3FA00452F24 /* ConnectionStatusLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB41BB27DEB3FA00452F24 /* ConnectionStatusLabel.swift */; };
 		6DBB41BF27DEBE7E00452F24 /* SessionPassDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB41BE27DEBE7E00452F24 /* SessionPassDelegate.swift */; };
@@ -18,6 +19,7 @@
 		6DBB41C427DFA0D600452F24 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 6DBB41C327DFA0D600452F24 /* Collections */; };
 		6DBB41C627DFA0D600452F24 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 6DBB41C527DFA0D600452F24 /* DequeModule */; };
 		6DBB41C827DFA0D600452F24 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 6DBB41C727DFA0D600452F24 /* OrderedCollections */; };
+		6DEEF8A327DFA534002330CB /* SquareMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEF8A227DFA534002330CB /* SquareMap.swift */; };
 		842316E01F2030C300D189D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842316DF1F2030C300D189D1 /* AppDelegate.swift */; };
 		842316E41F2030C300D189D1 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842316E31F2030C300D189D1 /* ARViewController.swift */; };
 		842316E71F2030C300D189D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842316E51F2030C300D189D1 /* Main.storyboard */; };
@@ -31,10 +33,12 @@
 		11C983EB20953B7900394C67 /* MultipeerSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerSession.swift; sourceTree = "<group>"; };
 		11E97209209A355F006E3D26 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		3E1BD91AFA02CCC40A2B4F85 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		6D2612ED27E0131E00B54932 /* GameLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoader.swift; sourceTree = "<group>"; };
 		6D4D836D27DE9B9E0057AB62 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		6DBB41BB27DEB3FA00452F24 /* ConnectionStatusLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusLabel.swift; sourceTree = "<group>"; };
 		6DBB41BE27DEBE7E00452F24 /* SessionPassDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPassDelegate.swift; sourceTree = "<group>"; };
 		6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAction.swift; sourceTree = "<group>"; };
+		6DEEF8A227DFA534002330CB /* SquareMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareMap.swift; sourceTree = "<group>"; };
 		842316DC1F2030C300D189D1 /* ARMultiuser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMultiuser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		842316DF1F2030C300D189D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		842316E31F2030C300D189D1 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +72,31 @@
 			name = Configuration;
 			sourceTree = "<group>";
 		};
+		6D2612EA27E012EF00B54932 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		6D2612EB27E012FA00B54932 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6D4D836D27DE9B9E0057AB62 /* MenuViewController.swift */,
+				842316E31F2030C300D189D1 /* ARViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6D2612EC27E0130E00B54932 /* Loaders */ = {
+			isa = PBXGroup;
+			children = (
+				6D2612ED27E0131E00B54932 /* GameLoader.swift */,
+			);
+			path = Loaders;
+			sourceTree = "<group>";
+		};
 		6D4D836F27DEB39D0057AB62 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +112,14 @@
 				6DBB41BE27DEBE7E00452F24 /* SessionPassDelegate.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		6DEEF8A427DFA53D002330CB /* SceneMap */ = {
+			isa = PBXGroup;
+			children = (
+				6DEEF8A227DFA534002330CB /* SquareMap.swift */,
+			);
+			path = SceneMap;
 			sourceTree = "<group>";
 		};
 		842316D31F2030C300D189D1 = {
@@ -107,12 +144,13 @@
 		842316DE1F2030C300D189D1 /* ARMultiuser */ = {
 			isa = PBXGroup;
 			children = (
+				6D2612EC27E0130E00B54932 /* Loaders */,
+				6D2612EB27E012FA00B54932 /* ViewControllers */,
+				6D2612EA27E012EF00B54932 /* Player */,
+				6DEEF8A427DFA53D002330CB /* SceneMap */,
 				6DBB41BD27DEBE6300452F24 /* Protocols */,
 				6D4D836F27DEB39D0057AB62 /* UIElements */,
 				842316DF1F2030C300D189D1 /* AppDelegate.swift */,
-				6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */,
-				842316E31F2030C300D189D1 /* ARViewController.swift */,
-				6D4D836D27DE9B9E0057AB62 /* MenuViewController.swift */,
 				11C983EB20953B7900394C67 /* MultipeerSession.swift */,
 				11E97209209A355F006E3D26 /* Utilities.swift */,
 				842316E51F2030C300D189D1 /* Main.storyboard */,
@@ -214,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11E9720A209A355F006E3D26 /* Utilities.swift in Sources */,
+				6DEEF8A327DFA534002330CB /* SquareMap.swift in Sources */,
 				6D4D836E27DE9B9E0057AB62 /* MenuViewController.swift in Sources */,
 				6DBB41BF27DEBE7E00452F24 /* SessionPassDelegate.swift in Sources */,
 				111DC86920ACAB690037F7B1 /* RoundedButton.swift in Sources */,
@@ -221,6 +260,7 @@
 				842316E41F2030C300D189D1 /* ARViewController.swift in Sources */,
 				6DBB41C127DF8FAC00452F24 /* PlayerAction.swift in Sources */,
 				6DBB41BC27DEB3FA00452F24 /* ConnectionStatusLabel.swift in Sources */,
+				6D2612EE27E0131E00B54932 /* GameLoader.swift in Sources */,
 				842316E01F2030C300D189D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
