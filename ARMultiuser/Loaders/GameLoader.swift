@@ -12,7 +12,7 @@ import SceneKit
 
 class GameLoader {
     
-    let scale: Float = 40
+    let scale: Float = 60
     
     static var players: [SCNNode]!
     

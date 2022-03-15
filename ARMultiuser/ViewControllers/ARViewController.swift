@@ -36,7 +36,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        squareMap = Map(size: 13)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -180,9 +179,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
             let node = nodeHitTestResult.node
             if node.name != "Terrain" {
                 if previousSelected != nil  {
-                    print("----------->")
-                    print(previousSelected.name)
-                    print(node.name)
                     if Int(previousSelected.name!) != nil && previousSelected.name != node.name{
                         node.runAction(SCNAction.fadeOut(duration: 0.3))
                         node.isHidden = true
@@ -231,6 +227,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         do{
             print("Share the map")
             let encoder = JSONEncoder()
+            squareMap = MapGenerator().generateMap()
             let data = try encoder.encode(squareMap)
             self.multipeerSession.sendToAllPeers(data)
         } catch {

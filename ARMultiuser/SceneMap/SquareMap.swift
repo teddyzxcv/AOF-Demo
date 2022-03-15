@@ -10,7 +10,7 @@ import Foundation
 import DequeModule
 import ARKit
 
-class Square: Codable {
+class Square: Codable{
     // Скорость "роста высоты" клетки
     var speed = 0
     // Высота клетки в каком-то определённом чанке
@@ -32,6 +32,8 @@ class Square: Codable {
     
     var x = 0
     var y = 0
+    
+    
 }
 
 class Map: Codable {
@@ -63,6 +65,26 @@ class Map: Codable {
         first_x = Int.random(in: 0..<size)
         second_y = Int.random(in: 0..<size)
         second_x = Int.random(in: 0..<size)
+    }
+    
+    func generateRandomPlayersPosition(){
+        first_y = Int.random(in: 0..<size)
+        first_x = Int.random(in: 0..<size)
+        second_y = Int.random(in: 0..<size)
+        second_x = Int.random(in: 0..<size)
+    }
+    
+    init() {
+        first_x = 0
+        first_y = 0
+        // Координаты второго игрока.
+        second_x = 0
+        second_y = 0
+        size = 0
+        // Карта высот.
+        heights = [[Int]]()
+        // Карта ресурсов.
+        resources = [[Int]]()
     }
     // ---------------------------------------Вспомонательные массивы---------------------------------------
     var stock: [[Square]] = [[Square]]()

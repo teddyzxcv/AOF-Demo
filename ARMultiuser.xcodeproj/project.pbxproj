@@ -20,6 +20,7 @@
 		6DBB41C627DFA0D600452F24 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 6DBB41C527DFA0D600452F24 /* DequeModule */; };
 		6DBB41C827DFA0D600452F24 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 6DBB41C727DFA0D600452F24 /* OrderedCollections */; };
 		6DEEF8A327DFA534002330CB /* SquareMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEEF8A227DFA534002330CB /* SquareMap.swift */; };
+		6DF4E15627E0DDC0004928E7 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF4E15527E0DDC0004928E7 /* MapGenerator.swift */; };
 		842316E01F2030C300D189D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842316DF1F2030C300D189D1 /* AppDelegate.swift */; };
 		842316E41F2030C300D189D1 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842316E31F2030C300D189D1 /* ARViewController.swift */; };
 		842316E71F2030C300D189D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842316E51F2030C300D189D1 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		6DBB41BE27DEBE7E00452F24 /* SessionPassDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPassDelegate.swift; sourceTree = "<group>"; };
 		6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAction.swift; sourceTree = "<group>"; };
 		6DEEF8A227DFA534002330CB /* SquareMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareMap.swift; sourceTree = "<group>"; };
+		6DF4E15527E0DDC0004928E7 /* MapGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
 		842316DC1F2030C300D189D1 /* ARMultiuser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMultiuser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		842316DF1F2030C300D189D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		842316E31F2030C300D189D1 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				6D2612ED27E0131E00B54932 /* GameLoader.swift */,
+				6DF4E15527E0DDC0004928E7 /* MapGenerator.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			files = (
 				11E9720A209A355F006E3D26 /* Utilities.swift in Sources */,
 				6DEEF8A327DFA534002330CB /* SquareMap.swift in Sources */,
+				6DF4E15627E0DDC0004928E7 /* MapGenerator.swift in Sources */,
 				6D4D836E27DE9B9E0057AB62 /* MenuViewController.swift in Sources */,
 				6DBB41BF27DEBE7E00452F24 /* SessionPassDelegate.swift in Sources */,
 				111DC86920ACAB690037F7B1 /* RoundedButton.swift in Sources */,
