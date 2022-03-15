@@ -78,22 +78,28 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     // MARK: - ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        let lightNode = SCNNode()
-        lightNode.light = SCNLight()
-        lightNode.light?.type = .omni
-        lightNode.position = SCNVector3(x: 0, y: 20 , z: 20)
-        lightNode.castsShadow = true
-        lightNode.light?.color = UIColor.white
-        lightNode.name = "light"
-        node.addChildNode(lightNode)
         if let name = anchor.name, name.hasPrefix("gamePlace") {
+            print("Start rendering")
+            let lightNode = SCNNode()
+            lightNode.light = SCNLight()
+            lightNode.light?.type = .omni
+            lightNode.position = SCNVector3(x: 0, y: 20 , z: 20)
+            lightNode.castsShadow = true
+            lightNode.light?.color = UIColor.white
+            lightNode.name = "light"
+            node.addChildNode(lightNode)
             let gameLoader = GameLoader()
-            let nodes = gameLoader.loadMap(squareMap: squareMap)
+            let sceneURL = Bundle.main.url(forResource: "terrain", withExtension: "scn", subdirectory: "Assets.scnassets")!
+            let referenceNode = SCNReferenceNode(url: sceneURL)!
+            referenceNode.load()
+            let nodes = gameLoader.loadMap(squareMap: self.squareMap, referenceNode: referenceNode)
             for chnode in nodes{
                 node.addChildNode(chnode)
             }
-            GameLoader.players = gameLoader.loadPlayers(squareMap: squareMap)
-            node.addChildNode(GameLoader.players.first!)
+            GameLoader.players = gameLoader.loadPlayers(squareMap: self.squareMap)
+            for chnode in GameLoader.players{
+                node.addChildNode(chnode)
+            }
         }
     }
     
@@ -159,31 +165,41 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
     
     // MARK: - Multiuser shared session
     
+    var previousSelected: SCNNode!
+    
     /// - Tag: PlaceCharacter
     @IBAction func handleSceneTap(_ sender: UITapGestureRecognizer) {
         // Hit test to find a place for a virtual object.
         guard let hitTestResult = sceneView
-                .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
-                .first
+            .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
+            .first
         else { return }
         if isPlaced {
             guard let nodeHitTestResult = sceneView.hitTest(sender.location(in: sceneView), options: .none).first
             else { return }
             let node = nodeHitTestResult.node
+            print("1:\(previousSelected), 2: \(node.description)")
             if node.name != "Terrain" {
                 let action = GameLoader().jumpAction()
+                if previousSelected != nil && Int(previousSelected.name!) != nil {
+                    node.runAction(SCNAction.fadeOut(duration: 0.3))
+                    node.isHidden = true
+                    previousSelected.runAction(GameLoader().moveToAction(dist: node.position))
+                    sendAction(playerIndex: 0, dist: node.position )
+                }
                 node.runAction(action)
-            } else {
-                GameLoader.players.first?.runAction(GameLoader().moveToAction(dist: node.position))
-                sendAction(playerIndex: 0, dist: node.position )
+            } else if previousSelected != nil && Int(previousSelected.name!) != nil{
+                print("Send action move")
+                previousSelected.runAction(GameLoader().moveToAction(dist: node.position))
+                sendAction(playerIndex: Int(previousSelected.name ?? "1") ?? 0, dist: node.position )
             }
+            previousSelected = node
             return
         }
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
         let anchor = ARAnchor(name: "gamePlace", transform: hitTestResult.worldTransform)
         sceneView.session.add(anchor: anchor)
         isPlaced = true
-        
         // Send the anchor info to peers, so they can place the same content.
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
         else { fatalError("can't encode anchor") }
@@ -230,22 +246,20 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
                 .decode(PlayerAction.self, from: data)
             GameLoader.players[action.playerIndex].runAction(GameLoader().moveToAction(dist: action.getDist()))
             //            sessionInfoLabel.text = "from \(peer.displayName), player index: \(action.playerIndex) do \(action.playerIndex)"
+            print("Recieved action")
             return
         } catch {
             // no use
         }
         do {
             if let sMap = try? JSONDecoder().decode(Map.self, from: data) {
-                print("Recieve squareMap")
                 squareMap = sMap
-            } else if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
-                print("Recieve ARmap")
+            } else if let worldMap = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                 // Run the session with the received world map.
                 let configuration = ARWorldTrackingConfiguration()
                 configuration.planeDetection = .horizontal
                 configuration.initialWorldMap = worldMap
                 sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                
                 // Remember who provided the map for showing UI feedback.
                 mapProvider = peer
             }

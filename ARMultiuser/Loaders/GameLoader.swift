@@ -16,10 +16,7 @@ class GameLoader {
     
     static var players: [SCNNode]!
     
-    func loadMap(squareMap: Map) -> [SCNNode] {
-        let sceneURL = Bundle.main.url(forResource: "terrain", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        let referenceNode = SCNReferenceNode(url: sceneURL)!
-        referenceNode.load()
+    func loadMap(squareMap: Map, referenceNode: SCNNode) -> [SCNNode] {
         let terrainNode = referenceNode.childNodes.first!
         var squareNodes = [SCNNode]()
         for indexX in 0..<squareMap.heights.count{
@@ -71,18 +68,27 @@ class GameLoader {
     }
     
     func loadPlayers(squareMap: Map) -> [SCNNode] {
-        let pShape = SCNCapsule(capRadius: 0.4 / CGFloat(scale), height: 2.5 / CGFloat(scale))
-        let node = SCNNode(geometry: pShape)
-        let x = Float(squareMap.first_x) - Float(squareMap.size / 2)
-        let y = Float(squareMap.first_y) - Float(squareMap.size / 2)
-        let nHeight: CGFloat = CGFloat(Float(squareMap.heights[squareMap.first_x][squareMap.first_y]) / scale)
-        node.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + (CGFloat(2.5 / scale) / 2)), z: Float(y) / Float(scale) )
-        node.name = "First Player"
-        return [node]
+        let pShapeFirst = SCNCapsule(capRadius: 0.4 / CGFloat(scale), height: 2.5 / CGFloat(scale))
+        let nodeFirst = SCNNode(geometry: pShapeFirst)
+        var x = Float(squareMap.first_x) - Float(squareMap.size / 2)
+        var y = Float(squareMap.first_y) - Float(squareMap.size / 2)
+        var nHeight: CGFloat = CGFloat(Float(squareMap.heights[squareMap.first_x][squareMap.first_y]) / scale)
+        nodeFirst.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + (CGFloat(2.5 / scale) / 2)), z: Float(y) / Float(scale) )
+        nodeFirst.name = "0"
+        nodeFirst.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        let pShapeSecond = SCNCapsule(capRadius: 0.4 / CGFloat(scale), height: 2.5 / CGFloat(scale))
+        let nodeSecond = SCNNode(geometry: pShapeSecond)
+        x = Float(squareMap.second_x) - Float(squareMap.size / 2)
+        y = Float(squareMap.second_y) - Float(squareMap.size / 2)
+        nHeight = CGFloat(Float(squareMap.heights[squareMap.second_x][squareMap.second_y]) / scale)
+        nodeSecond.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + (CGFloat(2.5 / scale) / 2)), z: Float(y) / Float(scale) )
+        nodeSecond.name = "1"
+        nodeSecond.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        return [nodeFirst, nodeSecond]
     }
     
     func getSquareByPos(vector: SCNVector3, squareMapSize: Int) -> Square{
-        var square = Square()
+        let square = Square()
         let x = round(vector.x * scale + Float(squareMapSize / 2))
         let y = round(vector.z * scale + Float(squareMapSize / 2))
         let h = round(vector.y * 2 * scale)
