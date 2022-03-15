@@ -178,16 +178,24 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
             guard let nodeHitTestResult = sceneView.hitTest(sender.location(in: sceneView), options: .none).first
             else { return }
             let node = nodeHitTestResult.node
-            print("1:\(previousSelected), 2: \(node.description)")
             if node.name != "Terrain" {
-                let action = GameLoader().jumpAction()
-                if previousSelected != nil && Int(previousSelected.name!) != nil {
-                    node.runAction(SCNAction.fadeOut(duration: 0.3))
-                    node.isHidden = true
-                    previousSelected.runAction(GameLoader().moveToAction(dist: node.position))
-                    sendAction(playerIndex: 0, dist: node.position )
+                if previousSelected != nil  {
+                    print("----------->")
+                    print(previousSelected.name)
+                    print(node.name)
+                    if Int(previousSelected.name!) != nil && previousSelected.name != node.name{
+                        node.runAction(SCNAction.fadeOut(duration: 0.3))
+                        node.isHidden = true
+                        previousSelected.runAction(SCNAction.move(to: node.position, duration: 0.2))
+                        sendAction(playerIndex: Int(previousSelected.name ?? "1") ?? 0, dist: node.position )
+                        return
+                    }
+                    let action = GameLoader().jumpAction()
+                    node.runAction(action)
+                } else {
+                    let action = GameLoader().jumpAction()
+                    node.runAction(action)
                 }
-                node.runAction(action)
             } else if previousSelected != nil && Int(previousSelected.name!) != nil{
                 print("Send action move")
                 previousSelected.runAction(GameLoader().moveToAction(dist: node.position))
