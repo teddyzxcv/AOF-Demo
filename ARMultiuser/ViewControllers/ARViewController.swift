@@ -192,7 +192,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
                     let action = GameLoader().jumpAction()
                     node.runAction(action)
                 }
-            } else if previousSelected != nil && Int(previousSelected.name!) != nil{
+            } else if node.name == "Resource" {
+                return
+            }else if previousSelected != nil && Int(previousSelected.name!) != nil{
                 print("Send action move")
                 previousSelected.runAction(GameLoader().moveToAction(dist: node.position))
                 sendAction(playerIndex: Int(previousSelected.name ?? "1") ?? 0, dist: node.position )

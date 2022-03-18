@@ -88,6 +88,7 @@ class GameLoader {
                 resourcesGeo.firstMaterial?.diffuse.contents = resourceColor
                 let resourcesNode = SCNNode(geometry: resourcesGeo)
                 resourcesNode.position = SCNVector3(x: Float(x) / Float(scale) , y: Float(nHeight + 0.4 / CGFloat(scale)), z: Float(y) / Float(scale) )
+                resourcesNode.name = "Resource"
                 squareNodes.append(resourcesNode)
             }
         }
