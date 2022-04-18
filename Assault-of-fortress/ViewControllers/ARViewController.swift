@@ -10,7 +10,7 @@ import SceneKit
 import ARKit
 import MultipeerConnectivity
 
-class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, SessionPassDelegate {
+class ARViewController: UIViewController, SessionPassDelegate {
     
     func passingSession(session: MultipeerSession) {
         multipeerSession = session
@@ -57,73 +57,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
-        
-        // Set a delegate to track the number of plane anchors for providing UI feedback.
         sceneView.session.delegate = self
-        
-        //sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
-        // Prevent the screen from being dimmed after a while as users will likely
-        // have long periods of interaction without touching the screen or buttons.
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // Pause the view's AR session.
         sceneView.session.pause()
     }
-    
-    // MARK: - ARSCNViewDelegate
-    
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if let name = anchor.name, name.hasPrefix("gamePlace") {
-            print("Start rendering")
-            let lightNode = SCNNode()
-            lightNode.light = SCNLight()
-            lightNode.light?.type = .omni
-            lightNode.position = SCNVector3(x: 0, y: 20 , z: 20)
-            lightNode.castsShadow = true
-            lightNode.light?.color = UIColor.white
-            lightNode.name = "light"
-            node.addChildNode(lightNode)
-            let gameLoader = GameLoader()
-            let sceneURL = Bundle.main.url(forResource: "terrain", withExtension: "scn", subdirectory: "Assets.scnassets")!
-            let referenceNode = SCNReferenceNode(url: sceneURL)!
-            referenceNode.load()
-            let nodes = gameLoader.loadMap(squareMap: self.squareMap, referenceNode: referenceNode)
-            for chnode in nodes{
-                node.addChildNode(chnode)
-            }
-            GameLoader.players = gameLoader.loadPlayers(squareMap: self.squareMap)
-            for chnode in GameLoader.players{
-                node.addChildNode(chnode)
-            }
-        }
-    }
-    
-    // MARK: - ARSessionDelegate
-    
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
-    }
-    
-    /// - Tag: CheckMappingStatus
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        switch frame.worldMappingStatus {
-        case .notAvailable, .limited:
-            sendMapButton.isEnabled = false
-        case .extending:
-            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
-        case .mapped:
-            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
-        @unknown default:
-            sendMapButton.isEnabled = false
-        }
-        mappingStatusLabel.text = frame.worldMappingStatus.description
-        updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
-    }
-    
     // MARK: - ARSessionObserver
     
     func sessionWasInterrupted(_ session: ARSession) {
@@ -224,12 +165,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
             fatalError()
         }
     }
+    
     /// - Tag: GetWorldMap
     @IBAction func shareSession(_ button: UIButton) {
         do{
             print("Share the map")
             let encoder = JSONEncoder()
             squareMap = MapGenerator().generateMap()
+            print(squareMap.first_x)
             let data = try encoder.encode(squareMap)
             self.multipeerSession.sendToAllPeers(data)
         } catch {
@@ -242,6 +185,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
             else { fatalError("can't encode map") }
             self.multipeerSession.sendToAllPeers(data)
         }
+    }
+    
+    @IBAction func resetTracking(_ sender: UIButton?) {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        isPlaced = false
     }
     
     var mapProvider: MCPeerID?
@@ -323,16 +273,59 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, 
             message = ""
             
         }
-        
         sessionInfoLabel.text = message
         sessionInfoView.isHidden = message.isEmpty
     }
+}
+
+extension ARViewController: ARSCNViewDelegate{
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if let name = anchor.name, name.hasPrefix("gamePlace") {
+            print("Start rendering")
+            let lightNode = SCNNode()
+            lightNode.light = SCNLight()
+            lightNode.light?.type = .omni
+            lightNode.position = SCNVector3(x: 0, y: 20 , z: 20)
+            lightNode.castsShadow = true
+            lightNode.light?.color = UIColor.white
+            lightNode.name = "light"
+            node.addChildNode(lightNode)
+            let gameLoader = GameLoader()
+            let sceneURL = Bundle.main.url(forResource: "terrain", withExtension: "scn", subdirectory: "Assets.scnassets")!
+            let referenceNode = SCNReferenceNode(url: sceneURL)!
+            referenceNode.load()
+            let nodes = gameLoader.loadMap(squareMap: self.squareMap, referenceNode: referenceNode)
+            for chnode in nodes{
+                node.addChildNode(chnode)
+            }
+            print(multipeerSession.session.connectedPeers.count)
+            GameLoader.players = gameLoader.loadPlayers(squareMap: self.squareMap, playerCount: multipeerSession.session.connectedPeers.count)
+            for chnode in GameLoader.players{
+                node.addChildNode(chnode)
+            }
+        }
+    }
+}
+
+extension ARViewController: ARSessionDelegate {
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
+    }
     
-    @IBAction func resetTracking(_ sender: UIButton?) {
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        isPlaced = false
+    /// - Tag: CheckMappingStatus
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        switch frame.worldMappingStatus {
+        case .notAvailable, .limited:
+            sendMapButton.isEnabled = false
+        case .extending:
+            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+        case .mapped:
+            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+        @unknown default:
+            sendMapButton.isEnabled = false
+        }
+        mappingStatusLabel.text = frame.worldMappingStatus.description
+        updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
     }
 }
 

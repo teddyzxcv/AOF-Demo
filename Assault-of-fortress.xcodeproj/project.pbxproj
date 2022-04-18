@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		111DC86920ACAB690037F7B1 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111DC86820ACAB690037F7B1 /* RoundedButton.swift */; };
-		112FE5671F4F95A200BF85EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112FE5661F4F95A200BF85EA /* Assets.xcassets */; };
 		11C983EC20953B7900394C67 /* MultipeerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C983EB20953B7900394C67 /* MultipeerSession.swift */; };
 		11E9720A209A355F006E3D26 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E97209209A355F006E3D26 /* Utilities.swift */; };
 		6D2612EE27E0131E00B54932 /* GameLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2612ED27E0131E00B54932 /* GameLoader.swift */; };
@@ -30,7 +29,6 @@
 
 /* Begin PBXFileReference section */
 		111DC86820ACAB690037F7B1 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
-		112FE5661F4F95A200BF85EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11C983EB20953B7900394C67 /* MultipeerSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerSession.swift; sourceTree = "<group>"; };
 		11E97209209A355F006E3D26 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		3E1BD91AFA02CCC40A2B4F85 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -41,7 +39,7 @@
 		6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAction.swift; sourceTree = "<group>"; };
 		6DEEF8A227DFA534002330CB /* SquareMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareMap.swift; sourceTree = "<group>"; };
 		6DF4E15527E0DDC0004928E7 /* MapGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
-		842316DC1F2030C300D189D1 /* ARMultiuser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMultiuser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		842316DC1F2030C300D189D1 /* Assault-of-fortress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Assault-of-fortress.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		842316DF1F2030C300D189D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		842316E31F2030C300D189D1 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		842316E61F2030C300D189D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -127,7 +125,7 @@
 		842316D31F2030C300D189D1 = {
 			isa = PBXGroup;
 			children = (
-				842316DE1F2030C300D189D1 /* ARMultiuser */,
+				842316DE1F2030C300D189D1 /* Assault-of-fortress */,
 				842316DD1F2030C300D189D1 /* Products */,
 				3ED828E95A1ABF3577E2A153 /* Configuration */,
 				AE71BD74610C40275D361BA8 /* LICENSE */,
@@ -137,12 +135,12 @@
 		842316DD1F2030C300D189D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				842316DC1F2030C300D189D1 /* ARMultiuser.app */,
+				842316DC1F2030C300D189D1 /* Assault-of-fortress.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		842316DE1F2030C300D189D1 /* ARMultiuser */ = {
+		842316DE1F2030C300D189D1 /* Assault-of-fortress */ = {
 			isa = PBXGroup;
 			children = (
 				6D2612EC27E0130E00B54932 /* Loaders */,
@@ -158,9 +156,8 @@
 				842316EA1F2030C300D189D1 /* LaunchScreen.storyboard */,
 				842316ED1F2030C300D189D1 /* Info.plist */,
 				84ABEA091F3D15E70052D547 /* Assets.scnassets */,
-				112FE5661F4F95A200BF85EA /* Assets.xcassets */,
 			);
-			path = ARMultiuser;
+			path = "Assault-of-fortress";
 			sourceTree = "<group>";
 		};
 		AE71BD74610C40275D361BA8 /* LICENSE */ = {
@@ -174,9 +171,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		842316DB1F2030C300D189D1 /* ARMultiuser */ = {
+		842316DB1F2030C300D189D1 /* Assault-of-fortress */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 842316F01F2030C300D189D1 /* Build configuration list for PBXNativeTarget "ARMultiuser" */;
+			buildConfigurationList = 842316F01F2030C300D189D1 /* Build configuration list for PBXNativeTarget "Assault-of-fortress" */;
 			buildPhases = (
 				842316D81F2030C300D189D1 /* Sources */,
 				842316D91F2030C300D189D1 /* Frameworks */,
@@ -186,14 +183,14 @@
 			);
 			dependencies = (
 			);
-			name = ARMultiuser;
+			name = "Assault-of-fortress";
 			packageProductDependencies = (
 				6DBB41C327DFA0D600452F24 /* Collections */,
 				6DBB41C527DFA0D600452F24 /* DequeModule */,
 				6DBB41C727DFA0D600452F24 /* OrderedCollections */,
 			);
 			productName = ARMultiuser;
-			productReference = 842316DC1F2030C300D189D1 /* ARMultiuser.app */;
+			productReference = 842316DC1F2030C300D189D1 /* Assault-of-fortress.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -212,7 +209,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 842316D71F2030C300D189D1 /* Build configuration list for PBXProject "ARMultiuser" */;
+			buildConfigurationList = 842316D71F2030C300D189D1 /* Build configuration list for PBXProject "Assault-of-fortress" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -228,7 +225,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				842316DB1F2030C300D189D1 /* ARMultiuser */,
+				842316DB1F2030C300D189D1 /* Assault-of-fortress */,
 			);
 		};
 /* End PBXProject section */
@@ -240,7 +237,6 @@
 			files = (
 				84ABEA0A1F3D15E70052D547 /* Assets.scnassets in Resources */,
 				842316EC1F2030C300D189D1 /* LaunchScreen.storyboard in Resources */,
-				112FE5671F4F95A200BF85EA /* Assets.xcassets in Resources */,
 				842316E71F2030C300D189D1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,7 +407,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = ADA785NP67;
-				INFOPLIST_FILE = ARMultiuser/Info.plist;
+				INFOPLIST_FILE = "Assault-of-fortress/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -431,7 +427,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = ADA785NP67;
-				INFOPLIST_FILE = ARMultiuser/Info.plist;
+				INFOPLIST_FILE = "Assault-of-fortress/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -448,7 +444,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		842316D71F2030C300D189D1 /* Build configuration list for PBXProject "ARMultiuser" */ = {
+		842316D71F2030C300D189D1 /* Build configuration list for PBXProject "Assault-of-fortress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				842316EE1F2030C300D189D1 /* Debug */,
@@ -457,7 +453,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		842316F01F2030C300D189D1 /* Build configuration list for PBXNativeTarget "ARMultiuser" */ = {
+		842316F01F2030C300D189D1 /* Build configuration list for PBXNativeTarget "Assault-of-fortress" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				842316F11F2030C300D189D1 /* Debug */,

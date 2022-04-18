@@ -48,6 +48,7 @@ class MultipeerSession: NSObject {
     
     func hostTheSession() {
         serviceAdvertiser.startAdvertisingPeer()
+        print("start hosting")
     }
     
     func browseTheSession() -> MCBrowserViewController{

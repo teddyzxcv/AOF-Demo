@@ -41,6 +41,7 @@ class MenuViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         
     }
+    
     @IBAction func joinTheSession(_ sender: RoundedButton) {
         let browser = multipeerSession.browseTheSession()
         browser.modalPresentationStyle = .pageSheet
@@ -48,6 +49,7 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func hostTheSession(_ sender: Any) {
+        print("host")
         multipeerSession.hostTheSession()
     }
     func receivedData(_ data: Data, from peer: MCPeerID){
@@ -76,10 +78,12 @@ extension MenuViewController: MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         connectStatusLabel.peerID = peerID
         connectStatusLabel.connectStatus = state
+        DispatchQueue.main.async {
         if(state == .connected){
-            startButton.isHidden = false
-        } else if(state == .notConnected){
-            startButton.isHidden = true
+            self.startButton.isHidden = false
+        } else {
+            self.startButton.isHidden = true
+        }
         }
     }
     

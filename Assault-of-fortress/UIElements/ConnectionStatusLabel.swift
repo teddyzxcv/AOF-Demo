@@ -52,16 +52,22 @@ class ConnectionStatusLabel: UILabel {
             switch connectStatus {
             case .notConnected:
                 print("Not connected")
+                DispatchQueue.main.async {
                 self.text =  "Not connected"
                 self.backgroundColor = UIColor.systemGray
+                }
             case .connecting:
                 print("Connecting: \(peerID.displayName)")
-                self.text =  "Connecting: \(peerID.displayName)"
-                self.backgroundColor = UIColor.systemBlue
+                DispatchQueue.main.async {
+                    self.text =  "Connecting: \(self.peerID.displayName)"
+                    self.backgroundColor = UIColor.systemBlue
+                }
             case .connected:
                 print("Connected: \(peerID.displayName)")
-                self.text =  "Connected: \(peerID.displayName)"
-                self.backgroundColor = UIColor.systemGreen
+                DispatchQueue.main.async {
+                    self.text =  "Connected: \(self.peerID.displayName)"
+                    self.backgroundColor = UIColor.systemGreen
+                }
             @unknown default:
                 print("Unknown state received: \(peerID.displayName)")
             }

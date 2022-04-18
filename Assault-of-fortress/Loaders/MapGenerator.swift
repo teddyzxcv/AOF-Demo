@@ -18,13 +18,6 @@ class MapGenerator {
     }
 }
 
-//
-//  main.swift
-//  debug3
-//
-//  Created by Семён Кондаков on 15.03.2022.
-//
-
 func custom_rand(t: Int) -> Int {
     return Int.random(in: 0...(t - 1)) - Int.random(in: 0...(t - 1))
 }
