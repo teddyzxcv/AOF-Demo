@@ -12,6 +12,9 @@
 		11E9720A209A355F006E3D26 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E97209209A355F006E3D26 /* Utilities.swift */; };
 		6D2612EE27E0131E00B54932 /* GameLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2612ED27E0131E00B54932 /* GameLoader.swift */; };
 		6D4D836E27DE9B9E0057AB62 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D836D27DE9B9E0057AB62 /* MenuViewController.swift */; };
+		6D57FD6E280F2B2000DE8D88 /* IMG_2800.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 6D57FD6D280F2B2000DE8D88 /* IMG_2800.PNG */; };
+		6D57FD70280F2B2600DE8D88 /* IMG_2799.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 6D57FD6F280F2B2600DE8D88 /* IMG_2799.PNG */; };
+		6D57FD72280F2B3D00DE8D88 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6D57FD71280F2B3D00DE8D88 /* README.md */; };
 		6DBB41BC27DEB3FA00452F24 /* ConnectionStatusLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB41BB27DEB3FA00452F24 /* ConnectionStatusLabel.swift */; };
 		6DBB41BF27DEBE7E00452F24 /* SessionPassDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB41BE27DEBE7E00452F24 /* SessionPassDelegate.swift */; };
 		6DBB41C127DF8FAC00452F24 /* PlayerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */; };
@@ -34,6 +37,9 @@
 		3E1BD91AFA02CCC40A2B4F85 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		6D2612ED27E0131E00B54932 /* GameLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoader.swift; sourceTree = "<group>"; };
 		6D4D836D27DE9B9E0057AB62 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		6D57FD6D280F2B2000DE8D88 /* IMG_2800.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_2800.PNG; sourceTree = "<group>"; };
+		6D57FD6F280F2B2600DE8D88 /* IMG_2799.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_2799.PNG; sourceTree = "<group>"; };
+		6D57FD71280F2B3D00DE8D88 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6DBB41BB27DEB3FA00452F24 /* ConnectionStatusLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusLabel.swift; sourceTree = "<group>"; };
 		6DBB41BE27DEBE7E00452F24 /* SessionPassDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPassDelegate.swift; sourceTree = "<group>"; };
 		6DBB41C027DF8FAC00452F24 /* PlayerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAction.swift; sourceTree = "<group>"; };
@@ -106,6 +112,15 @@
 			path = UIElements;
 			sourceTree = "<group>";
 		};
+		6D57FD6C280F2AD200DE8D88 /* Readme */ = {
+			isa = PBXGroup;
+			children = (
+				6D57FD6F280F2B2600DE8D88 /* IMG_2799.PNG */,
+				6D57FD6D280F2B2000DE8D88 /* IMG_2800.PNG */,
+			);
+			path = Readme;
+			sourceTree = "<group>";
+		};
 		6DBB41BD27DEBE6300452F24 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +140,8 @@
 		842316D31F2030C300D189D1 = {
 			isa = PBXGroup;
 			children = (
+				6D57FD71280F2B3D00DE8D88 /* README.md */,
+				6D57FD6C280F2AD200DE8D88 /* Readme */,
 				842316DE1F2030C300D189D1 /* Assault-of-fortress */,
 				842316DD1F2030C300D189D1 /* Products */,
 				3ED828E95A1ABF3577E2A153 /* Configuration */,
@@ -235,7 +252,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D57FD72280F2B3D00DE8D88 /* README.md in Resources */,
 				84ABEA0A1F3D15E70052D547 /* Assets.scnassets in Resources */,
+				6D57FD6E280F2B2000DE8D88 /* IMG_2800.PNG in Resources */,
+				6D57FD70280F2B2600DE8D88 /* IMG_2799.PNG in Resources */,
 				842316EC1F2030C300D189D1 /* LaunchScreen.storyboard in Resources */,
 				842316E71F2030C300D189D1 /* Main.storyboard in Resources */,
 			);
